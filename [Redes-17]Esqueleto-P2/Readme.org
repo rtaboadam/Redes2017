@@ -1,0 +1,13 @@
+* Practica 02
+** Objetivo
+Comprender y aplicar el concepto de llamadas a procedimientos remotos a traves 
+de una arquitectura cliente-servidor.
+
+** Requerimientos
+   Para esta práctica se va a utilizar
+   - python 2.7
+   - pyqt4
+** TODO [/]
+   -[ ] ka
+     
+   [[file:todo.png]]
