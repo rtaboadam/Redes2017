@@ -7,7 +7,9 @@ de una arquitectura cliente-servidor.
    Para esta práctica se va a utilizar
    - python 2.7
    - pyqt4
-** TODO [/]
-   -[ ] ka
+   - xmlrpclib 
+** TODO [1/2]
+   - [X] Carcasa para Login y Chat
+   - [ ]  
      
    [[file:todo.png]]
