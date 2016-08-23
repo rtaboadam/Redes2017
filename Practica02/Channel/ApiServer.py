@@ -6,7 +6,7 @@ from xmlrpclib import Binary
 
 def foo():
     return 'foo'
-
+stack = None
 class MyApiServer(threading.Thread):
     def __init__(self, my_port = 5000):
         """
@@ -33,6 +33,12 @@ class MyApiServer(threading.Thread):
         print "Ctrl-c para salir"
         self.servidor.serve_forever()
 
+    def verMensajes(self):
+        """
+        Metodo que regresa la lista de mensajes
+        """
+        return stack
+
 
 
 class FunctionWrapper:
@@ -41,7 +47,7 @@ class FunctionWrapper:
         Metodo contructor de la clase
         @param <list> stack: La pila de los mensajes
         """
-        self.stack = []
+        self.stack = stack = []
         
     def moo(self):
         return 'moo'
@@ -53,6 +59,7 @@ class FunctionWrapper:
     ************************************************** """
     def sendMessage_wrapper(self, message):
         self.stack = self.stack + [message]
+        print message
         return message
     
     def getStack(self):
