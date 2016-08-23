@@ -1,8 +1,8 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 import xmlrpclib
-from ApiServer import *#MyApiServer
-from ApiClient import *#MyApiClient
+from ApiServer import MyApiServer
+from ApiClient import MyApiClient
 from threading import Thread
 """**************************************************
 Las instancias de esta clase contendran los metodos
@@ -22,12 +22,11 @@ class Channel:
         @param <int> contact_port: De trabajar de manera local
                     representa el puerto de la instancia del contacto
         **************************************************"""
-    def __init__(self, contact_ip = None, contact_port = None):
+    def __init__(self, contact_ip = "localhost", contact_port = 6000, my_port = 5000):
         #TODO
         self.client = MyApiClient(contact_ip,contact_port) 
-        self.server = MyApiServer(my_port=contact_port)
-        threadserver =Thread(target = server.serve)
-        threadserver.start()
+        self.server = MyApiServer(my_port)
+        self.server.start()
 
     """**************************************************
     Metodo que se encarga de mandar texto al contacto con
@@ -38,6 +37,3 @@ class Channel:
         return self.client.sendMessage(text)
 
 
-if __name__ == '__main__':
-    x = Channel()
-    x.send_text('jejeje xD')

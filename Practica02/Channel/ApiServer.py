@@ -1,18 +1,20 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
+import threading
 from SimpleXMLRPCServer import SimpleXMLRPCServer
 from xmlrpclib import Binary
 
 def foo():
     return 'foo'
 
-class MyApiServer:
+class MyApiServer(threading.Thread):
     def __init__(self, my_port = 5000):
         """
         Metodo contructor de la clase
         @param <int> my_port: El puerto en el que va escuchar
         el servidor
         """
+        super(MyApiServer,self).__init__()
         self.servidor = SimpleXMLRPCServer(('localhost',my_port)
                                            ,logRequests=True
                                            , allow_none=True)
