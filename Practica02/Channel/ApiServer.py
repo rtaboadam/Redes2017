@@ -1,5 +1,8 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
+import sys
+sys.path.append('../Constants/')
+from Constants import *
 import threading
 from SimpleXMLRPCServer import SimpleXMLRPCServer
 from xmlrpclib import Binary
@@ -8,7 +11,7 @@ def foo():
     return 'foo'
 stack = None
 class MyApiServer(threading.Thread):
-    def __init__(self, my_port = 5000):
+    def __init__(self, my_port = Puerto_6000):
         """
         Metodo contructor de la clase
         @param <int> my_port: El puerto en el que va escuchar

@@ -1,5 +1,8 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
+import sys
+sys.path.append('../Constants/')
+from Constants import *
 import xmlrpclib
 from ApiServer import MyApiServer
 from ApiClient import MyApiClient
@@ -22,7 +25,7 @@ class Channel:
         @param <int> contact_port: De trabajar de manera local
                     representa el puerto de la instancia del contacto
         **************************************************"""
-    def __init__(self, contact_ip = "localhost", contact_port = 6000, my_port = 5000):
+    def __init__(self, contact_ip = "localhost", contact_port = Puerto_6000, my_port = Puerto_5000):
         #TODO
         self.client = MyApiClient(contact_ip,contact_port) 
         self.server = MyApiServer(my_port)

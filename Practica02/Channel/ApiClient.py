@@ -1,11 +1,14 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
+import sys
+sys.path.append('../Constants/')
+from Constants import *
 import xmlrpclib
 from SimpleXMLRPCServer import SimpleXMLRPCServer
 
 class MyApiClient:
     """Clase que implementa el servidor en nuestro chat"""
-    def __init__(self,my_ip='localhost',my_port=5000):
+    def __init__(self,my_ip='localhost',my_port=Puerto_5000):
         """
         Metodo contructor de la clase
         @param <string> my_ip: La dirección del ip
