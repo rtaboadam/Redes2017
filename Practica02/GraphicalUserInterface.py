@@ -16,15 +16,19 @@
 #################################################### #
 import sys, getopt
 sys.path.insert(0,'/')
-sys.path.append('./GUI')
-sys.path.append('./Channel')
-sys.path.append('./Constants')
+sys.path.append('./GUI/')
+sys.path.append('./Channel/')
+sys.path.append('./Constants/')
 
 from Login import *
 from ChatWindow import *
+<<<<<<< HEAD
 from Constants import *
 from Channel import *
 
+=======
+from Channel.Channel import *
+>>>>>>> practica2
 
 # **************************************************
 #  Definicion de la funcion principal
@@ -41,9 +45,11 @@ def main(argv):
         local = False
     app = QtGui.QApplication(sys.argv)
     if local:
-        loginWindow = Login2()
-    else:
         loginWindow = Login1()
+        loginWindow.show()
+    else:
+        loginWindow = Login2()
+        loginWindow.show()
     #TODO Llamar a su ventana de login
     sys.exit(app.exec_())
 

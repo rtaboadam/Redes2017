@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import sys
 sys.path.append('../Constants/')
-from Constants import *
+from Constants.Constants import *
 import xmlrpclib
 from SimpleXMLRPCServer import SimpleXMLRPCServer
 

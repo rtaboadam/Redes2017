@@ -3,21 +3,21 @@
 
 import sys
 sys.path.insert(0,'/')
-sys.path.append('../Constants/')
-from Constants import *
+#sys.path.append('../Constants/')
+#from Constants import *
 sys.path.append('../Channel/')
-from Channel import *
+from Channel.Channel import *
 from PyQt4 import QtGui
 
 class ChatWindow(QtGui.QMainWindow):
 
 	def __init__(self,parent=None,contact_ip=None,my_port=None,contact_port=None):
 		super(ChatWindow, self).__init__(parent)
-                channel = Channel(contact_ip,contact_port,my_port)
-                self.initGUI(channel)
+                self.channel = Channel(contact_ip,contact_port,my_port,self)
+                self.initGUI(self.channel)
 	
 	def initGUI(self,channel):
-		self.channel = channel
+		#self.channel = channel
 		self.widget = QtGui.QWidget()
 		self.widget.setWindowTitle("Chat")
 		self.widget.resize(250,250)
