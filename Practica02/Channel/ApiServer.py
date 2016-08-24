@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import sys
 sys.path.append('../Constants/')
-from Constants import *
+from Constants.Constants import *
 import threading
 from SimpleXMLRPCServer import SimpleXMLRPCServer
 from xmlrpclib import Binary
