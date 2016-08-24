@@ -22,13 +22,8 @@ sys.path.append('./Constants/')
 
 from Login import *
 from ChatWindow import *
-<<<<<<< HEAD
-from Constants import *
-from Channel import *
-
-=======
 from Channel.Channel import *
->>>>>>> practica2
+
 
 # **************************************************
 #  Definicion de la funcion principal
