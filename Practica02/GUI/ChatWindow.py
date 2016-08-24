@@ -8,7 +8,6 @@ from Constants import *
 sys.path.append('../Channel/')
 from Channel import *
 from PyQt4 import QtGui
-from PyQt4 import QtGui
 
 class ChatWindow(QtGui.QMainWindow):
 
