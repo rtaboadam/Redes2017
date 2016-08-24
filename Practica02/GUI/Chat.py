@@ -12,12 +12,11 @@ from PyQt4 import QtGui
 
 class ChatWindow(QtGui.QMainWindow):
 
-	def __init__(self,parent=None,contact_ip=None,my_port=None,contact_port=None):
+	def __init__(self,parent=None):
 		super(ChatWindow, self).__init__(parent)
-                channel = Channel(contact_ip,contact_port,my_port)
-                self.initGUI(channel)
+		self.initGUI()
 	
-	def initGUI(self,channel):
+	def initGUI(self,channel=Channel()):
 		self.channel = channel
 		self.widget = QtGui.QWidget()
 		self.widget.setWindowTitle("Chat")
