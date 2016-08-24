@@ -15,8 +15,13 @@
 # Distributed under terms of the MIT license.        #
 #################################################### #
 import sys, getopt
+sys.path.insert(0,'/')
+sys.path.append('./GUI')
+sys.path.append('./Channel')
+sys.path.append('./Constants')
 
-
+from Login import *
+from ChatWindow import *
 
 # **************************************************
 #  Definicion de la funcion principal
@@ -32,6 +37,10 @@ def main(argv):
     else:
         local = False
     app = QtGui.QApplication(sys.argv)
+    if local:
+        loginWindow = Login2()
+    else:
+        loginWindow = Login1()
     #TODO Llamar a su ventana de login
     sys.exit(app.exec_())
 
