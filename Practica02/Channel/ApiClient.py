@@ -19,6 +19,7 @@ class MyApiClient:
         puerto = str(my_port)
         uri = 'http://'+my_ip+':'+str(puerto)
         self.proxy = xmlrpclib.ServerProxy(uri)
+        self.grabadora = None
 
 
     def sendMessage(self,text):
@@ -29,7 +30,7 @@ class MyApiClient:
         return self.proxy.sendMessage_wrapper(text)
 
     def sendAudio(self):
-        grabadora = MyRecordAudio(formato=pyaudio.paInt16, channels=2,rate=44100,input1=True,frames_per_buffer=1024)
-        grabadora.run()
-        return self.proxy.sendAudio_wrapper(grabadora)
+        self.grabadora = MyRecordAudio(formato=pyaudio.paInt16, channels=2,rate=44100,input1=True,frames_per_buffer=1024)
+        self.grabadora.run()
+        return self.proxy.sendAudio_wrapper(self.grabadora)
         
