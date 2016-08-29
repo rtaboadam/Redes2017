@@ -6,6 +6,7 @@ from Constants.Constants import *
 import xmlrpclib
 from ApiServer import MyApiServer
 from ApiClient import MyApiClient
+
 from threading import Thread
 """**************************************************
 Las instancias de esta clase contendran los metodos
@@ -39,5 +40,8 @@ class Channel:
     def send_text(self, text):
         #TODO
         return self.client.sendMessage(text)
+
+    def send_audio(self):
+        return self.client.sendAudio()
 
 

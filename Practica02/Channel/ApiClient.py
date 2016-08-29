@@ -5,6 +5,8 @@ sys.path.append('../Constants/')
 from Constants.Constants import *
 import xmlrpclib
 from SimpleXMLRPCServer import SimpleXMLRPCServer
+from RecordAudio import MyRecordAudio
+import pyaudio
 
 class MyApiClient:
     """Clase que implementa el servidor en nuestro chat"""
@@ -25,4 +27,9 @@ class MyApiClient:
         @param <string> text: El texto a enviar
         """
         return self.proxy.sendMessage_wrapper(text)
+
+    def sendAudio(self):
+        grabadora = MyRecordAudio(pyaudio.paInt16, 2,44100, True,1024)
+        grabadora.run()
+        return self.proxy.sendAudio_wrapper(grabadora)
         

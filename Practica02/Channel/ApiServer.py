@@ -4,6 +4,8 @@ import sys
 sys.path.append('../Constants/')
 from Constants.Constants import *
 import threading
+import wave
+import pyaudio
 from SimpleXMLRPCServer import SimpleXMLRPCServer
 from xmlrpclib import Binary
 
@@ -54,6 +56,7 @@ class FunctionWrapper:
         """
         self.interfaz = interfaz
         self.stack = stack = []
+        self.audio = []
         
     def moo(self):
         return 'moo'
@@ -74,6 +77,25 @@ class FunctionWrapper:
         Metodo que regresa la lista de mensajes
         """
         return self.stack
+
+    def sendAudio_wrapper(self,audioChunks):
+        wf = wave.open(sys.argv[1], 'rb')
+        p = pyaudio.PyAudio()
+        audio = audioChunks.pila
+        waveFile = wave.open("file.wav", 'wb')
+        waveFile.setnchannels(2)
+        waveFile.setsampwidth(audio.get_sample_size(pyaudio.paInt16))
+        waveFile.setframerate(44100)
+        waveFile.writeframes(b''.join(frames))
+        waveFile.close()
+        stream = p.open(pyaudio.paInt16, 2,44100, True,1024)
+        data = waveFile.readframes(1024)
+        while len(data) > 0:
+            stream.write(data)
+            data = waveFile.readframes(1024)
+        stream.close()    
+        p.terminate()
+
 
 
 
