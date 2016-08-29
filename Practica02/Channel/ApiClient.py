@@ -29,7 +29,7 @@ class MyApiClient:
         return self.proxy.sendMessage_wrapper(text)
 
     def sendAudio(self):
-        grabadora = MyRecordAudio(pyaudio.paInt16, 2,44100, True,1024)
+        grabadora = MyRecordAudio(formato=pyaudio.paInt16, channels=2,rate=44100,input1=True,frames_per_buffer=1024)
         grabadora.run()
         return self.proxy.sendAudio_wrapper(grabadora)
         
