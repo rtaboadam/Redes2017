@@ -2,9 +2,11 @@
 # -*- coding: utf-8 -*-
 import sys
 sys.path.append('../Constants/')
-from Constants import *
+from Constants.Constants import *
 import xmlrpclib
 from SimpleXMLRPCServer import SimpleXMLRPCServer
+from RecordAudio import MyRecordAudio
+import pyaudio
 
 class MyApiClient:
     """Clase que implementa el servidor en nuestro chat"""
@@ -17,6 +19,7 @@ class MyApiClient:
         puerto = str(my_port)
         uri = 'http://'+my_ip+':'+str(puerto)
         self.proxy = xmlrpclib.ServerProxy(uri)
+        self.grabadora = None
 
 
     def sendMessage(self,text):
@@ -25,4 +28,9 @@ class MyApiClient:
         @param <string> text: El texto a enviar
         """
         return self.proxy.sendMessage_wrapper(text)
+
+    def sendAudio(self):
+        self.grabadora = MyRecordAudio(formato=pyaudio.paInt16, channels=2,rate=44100,input1=True,frames_per_buffer=1024)
+        self.grabadora.run()
+        return self.proxy.sendAudio_wrapper(self.grabadora)
         

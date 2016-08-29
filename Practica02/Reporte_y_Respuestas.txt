@@ -1,0 +1,27 @@
+** Respuestas
+**  ¿Qué es una IP y para que sirve?
+Es un identificador para mostrarse en la red
+** A grandes rasgos define lo que es un puerto
+Es una interfaz que te permite acceder a procesos remotos
+Siempre esta en escucha de alguna solicitud
+** ¿Se puede tener dos clientes en una misma computadora? 
+Si, diferentes puertos y con diferentes procesos
+
+* Reporte
+Problema: Queremos una aplicacion para enviar mensajes entre dos computadoras
+
+----Archivos-----
+-Login.py Ventana que maneja la seleccion de puertos o la ip para conectarse y usar la aplicacion
+-ChatWindow.py Ventana que maneja la interfaz del chat
+-ApiServer.py Nos da los servicios que proporciona el servidor de una aplicacion de chat, en este caso las funciones para enviar texto
+-ApiClient.py Nos permite conectarnos al servidor
+-Channel.py Crea un enlace entre nuestro cliente-servidor y el cliente-servidor de la persona con la que vamos a chatear
+
+Problemas que encontramos:
+Entender el funcionamiento de la aplicacion, ya que al ser nuestra primer aplicacion de red algunas cosas no las teniamos claras como el manejo de 
+cliente-servidor. Tambien lograr que se mostrara el mensaje recibido en la ventana de chat fue nuestro mayor problema y la razon por la que entregamos
+tarde esta practica :(
+La funcionalidad de ip no la pudimos probar porque no pudimos lograr ni siquiera la conexion entre computadoras, siempre nos devolvio errores
+
+Problemas que no solucionamos
+La funcionalidad con ip fija.
