@@ -8,6 +8,12 @@ import wave
 import pyaudio
 from SimpleXMLRPCServer import SimpleXMLRPCServer
 from xmlrpclib import Binary
+import numpy as np
+import numpy
+CHUNK = 1024
+CHANNELS = 1 
+RATE = 44100
+DELAY_SECONDS = 5
 
 def foo():
     return 'foo'
@@ -78,23 +84,21 @@ class FunctionWrapper:
         """
         return self.stack
 
-    def sendAudio_wrapper(self,audioChunks):
-        wf = wave.open(sys.argv[1], 'rb')
+    def sendAudio_wrapper(self,audio):
         p = pyaudio.PyAudio()
-        audio = audioChunks.pila
-        waveFile = wave.open("file.wav", 'wb')
-        waveFile.setnchannels(2)
-        waveFile.setsampwidth(audio.get_sample_size(pyaudio.paInt16))
-        waveFile.setframerate(44100)
-        waveFile.writeframes(b''.join(frames))
-        waveFile.close()
-        stream = p.open(pyaudio.paInt16, 2,44100, True,1024)
-        data = waveFile.readframes(1024)
-        while len(data) > 0:
-            stream.write(data)
-            data = waveFile.readframes(1024)
-        stream.close()    
+        FORMAT = p.get_format_from_width(2)
+        stream = p.open(format=FORMAT,
+                    channels=CHANNELS,
+                    rate=RATE,
+                    output=True,
+                    frames_per_buffer=CHUNK)
+        data = audio.data
+        stream.write(data)
+        stream.close()
         p.terminate()
+        #playVThread = threading.Thread(target=sendAudio_wrapper, args=(,))
+        #playVThread.setDaemon(True)
+        #playVThread.start()
 
 
 

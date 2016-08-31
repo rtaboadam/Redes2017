@@ -7,6 +7,7 @@ import xmlrpclib
 from SimpleXMLRPCServer import SimpleXMLRPCServer
 from RecordAudio import MyRecordAudio
 import pyaudio
+import multiprocessing as mp
 
 class MyApiClient:
     """Clase que implementa el servidor en nuestro chat"""
@@ -19,6 +20,7 @@ class MyApiClient:
         puerto = str(my_port)
         uri = 'http://'+my_ip+':'+str(puerto)
         self.proxy = xmlrpclib.ServerProxy(uri)
+        self.grabadora = MyRecordAudio(formato=pyaudio.paInt16, channels=2,rate=44100,input1=True,frames_per_buffer=1024)
 
 
     def sendMessage(self,text):
@@ -29,7 +31,12 @@ class MyApiClient:
         return self.proxy.sendMessage_wrapper(text)
 
     def sendAudio(self):
-        grabadora = MyRecordAudio(formato=pyaudio.paInt16, channels=2,rate=44100,input1=True,frames_per_buffer=1024)
-        grabadora.run()
-        return self.proxy.sendAudio_wrapper(grabadora)
+        #self.grabadora = MyRecordAudio(formato=pyaudio.paInt16, channels=2,rate=44100,input1=True,frames_per_buffer=1024)
+        queue = mp.Queue()
+        p = mp.Process(target=self.grabadora.graba, args=(queue,))
+        p.start()
+        while True:
+            d = queue.get()
+            data = xmlrpclib.Binary(d)
+            self.proxy.sendAudio_wrapper(data)
         
