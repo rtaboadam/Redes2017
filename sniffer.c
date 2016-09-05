@@ -17,6 +17,8 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+#define SNAP_LEN 1518
+
 int main(int argc, char **argv){
   char dev[255];// = NULL; /*El nombre de la interfaz*/
   char errbuf[PCAP_ERRBUF_SIZE]; /*error buffer*/
@@ -47,12 +49,18 @@ int main(int argc, char **argv){
   //Aqui se acaba de mostrar el menu
   printf("Escriba el nombre de la interfaz a usar: ");
   scanf("%s",dev);//Asignamos la interfaz a usar
-  //Esta parte asigna que interfaz vamos a oler
-  dev = pcap_lookupdev(errbuf);
-  if(dev == NULL){
-    fprintf(stderr, "No se encontro la interfaz: %s\n",
-	    errbuf);
+
+  /* abrimos el capturador*/
+  handle = pcap_open_live(dev,SNAP_LEN,1,1000,errbuf);
+  if(handle == NULL){ //si valio madres
+    fprintf(stderr, "No pudo abrirse la interfaz %s: %s\n",dev,errbuf);
     exit(EXIT_FAILURE);
-  }//Fin de establecer interfaz
- 
+  }
+
+  /*En esta parte le compilamos el filtro*/
+  if (pcap_compile(handle, &fp, filter_exp, 0, net) == -1) {
+    fprintf(stderr, "Couldn't parse filter %s: %s\n",
+	    filter_exp, pcap_geterr(handle));
+    exit(EXIT_FAILURE);
+  }
 }
