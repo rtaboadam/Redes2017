@@ -4,7 +4,7 @@
  *Redes de Computadoras
  *Ejercio01: http sniffer
  *@author Ricardo Taboada
- *@author Fransisco
+ *@author Francisco
  */
 #include <pcap.h>
 #include <stdio.h>
@@ -99,24 +99,24 @@ print_hex_ascii_line(const u_char *payload, int len, int offset)
  int i;
  int gap;
  const u_char *ch;
- 
- /* offset */
+ /*
+ /* offset 
  printf("%05d   ", offset);
   
- /* hex */
+ /* hex 
  ch = payload;
  for(i = 0; i < len; i++) {
   printf("%02x ", *ch);
   ch++;
-  /* print extra space after 8th byte for visual aid */
+  /* print extra space after 8th byte for visual aid 
   if (i == 7)
    printf(" ");
  }
- /* print space to handle line less than 8 bytes */
+ /* print space to handle line less than 8 bytes 
  if (len < 8)
   printf(" ");
   
- /* fill hex gap with spaces if not full line */
+ /* fill hex gap with spaces if not full line 
  if (len < 16) {
   gap = 16 - len;
   for (i = 0; i < gap; i++) {
@@ -124,9 +124,9 @@ print_hex_ascii_line(const u_char *payload, int len, int offset)
   }
  }
  printf("   ");
-  
+  */
  /* ascii (if printable) */
- ch = payload;
+ ch = payload; //16;
  for(i = 0; i < len; i++) {
   if (isprint(*ch))
    printf("%c", *ch);
