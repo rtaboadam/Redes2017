@@ -18,7 +18,7 @@
 #include <arpa/inet.h>
 
 int main(int argc, char **argv){
-  char *dev = NULL; /*El nombre de la interfaz*/
+  char dev[255];// = NULL; /*El nombre de la interfaz*/
   char errbuf[PCAP_ERRBUF_SIZE]; /*error buffer*/
   pcap_t *handle; /*packet capture handle*/
   /*El filtrado para http al puerto 80*/
@@ -27,9 +27,8 @@ int main(int argc, char **argv){
   bpf_u_int32 mask; /*mascara de subred*/
   bpf_u_int32 net; /*ip*/
   int num_packets;
-  /**
-     AQUI DEBO DE PONER EL MENU DE LAS INTERFACES
-   */
+  
+  //AQUI DEBO DE PONER EL MENU DE LAS INTERFACES
   pcap_if_t *alldevsp , *device;
   char *devname , **devs;
   int count = 1 , n;
@@ -43,19 +42,17 @@ int main(int argc, char **argv){
   printf("\nDevices:\n");
   while(device != NULL){
     printf("%d. %s - %s\n", count++ , device->name , device->description);
-    //list = device->addresses[0];
-    //printf("address: %s\n", inet_ntoa(((struct sockaddr_in*)list.addr)->sin_addr));
     device = device -> next;
   }
-
-  
-  //Modificar //Esta parte asigna que interfaz vamos a oler
-  /*dev = pcap_lookupdev(errbuf);
+  //Aqui se acaba de mostrar el menu
+  printf("Escriba el nombre de la interfaz a usar: ");
+  scanf("%s",dev);//Asignamos la interfaz a usar
+  //Esta parte asigna que interfaz vamos a oler
+  dev = pcap_lookupdev(errbuf);
   if(dev == NULL){
     fprintf(stderr, "No se encontro la interfaz: %s\n",
 	    errbuf);
     exit(EXIT_FAILURE);
-  }*/
-  //Fin de establecer interfaz
+  }//Fin de establecer interfaz
  
 }
