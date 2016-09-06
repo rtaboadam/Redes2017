@@ -97,23 +97,39 @@ print_hex_ascii_line(const u_char *payload, int len, int offset)
 {
  
  int i;
- int gap;
- const u_char *ch;
-
- /* ascii (if printable) */
- ch = payload;
+ int gap,url_length;
+ const u_char *ch, *end_url, *final_url;
  int j = 0;
- for(i = 0; i < len*4; i++) {
+ /* ascii (if printable) */
+ ch = (const char *)payload;
+ //intento de crear una cadena y parsearla... nu usar!!! la computadora muere
+ //const u_char *url;
+ //url = (const char *)(payload + 4);
+ //end_url = strchr((char*)url, ' ');
+ //url_length = end_url - url;
+
+
+//final_url = (const char *)(u_char *)malloc(url_length + 1);
+//strncpy((char*)final_url, (char*)url, url_length);
+//final_url[url_length] = '\0';
+//printf("%s\n",final_url);
+ for(i = 0; i < len; i++) {
+  j = 0;
   if (isprint(*ch)){
-    //if(*ch == '.' && *ch+1 == '.')
-      //printf("");
-   printf("%c", *ch);
+    //if(*ch == ' ' && *(ch+1)==' ')
+      //printf("\n");
+    //else{
+      printf("%c", *ch);
+      //j++;
+    //}
    } 
   else{
-   printf(" \n");
+    j++;
+   printf("\r\n");
   }
   ch++;
  }
+ //printf("%s",(const char *)payload);
  printf("\n");
  
 return;
@@ -246,7 +262,7 @@ got_packet(u_char *args, const struct pcap_pkthdr *header, const u_char *packet)
   * treat it as a string.
   */
  if (size_payload > 0) {
-  printf("   Payload (%d bytes):\n", size_payload);
+  printf("   Payload (%d bytes):\n\nHTTP HEADER\n\n", size_payload);
   print_payload(payload, size_payload);
  }
  
@@ -275,7 +291,22 @@ int main(int argc, char **argv){
   pcap_if_t *alldevsp , *device;
   char *devname , **devs;
   int count = 1 , n;
-  
+  if(argv[1] != NULL){
+    char errorbuffer[PCAP_ERRBUF_SIZE];
+    printf("Abriendo archivo: %s\n", argv[1]);
+    pcap_t *cap;
+    cap = pcap_open_offline(argv[1], errorbuffer);
+    //Si la captura realizada no fue exitosa salimos del programa
+    if(cap == NULL) {
+        printf("Error de captura: Probablemente el archivo no exista\n");
+        return -1;
+    }
+    // Con la captura lista procedemos a leer sus paquetes
+    pcap_loop(cap,-1,got_packet, NULL);
+    pcap_close(cap);
+  }
+  else{
+
   if(pcap_findalldevs(&alldevsp,errbuf)){
     printf("Error: %s",errbuf);
     exit(1);
@@ -317,5 +348,6 @@ int main(int argc, char **argv){
   pcap_freecode(&fp);
   pcap_close(handle);
   printf("DONE");
+  }
   return 0;
 }
