@@ -1,0 +1,6 @@
+Nombres:
+Garcia Romo Claudia
+Marquez Cortes Francisco Javier
+Taboada Magallanes Ricardo
+
+Para ejecutar la lectura desde archivo incluir el nombre como parametro en la linea de comandos, ejemplo: sudo ./lab archivo.cap
