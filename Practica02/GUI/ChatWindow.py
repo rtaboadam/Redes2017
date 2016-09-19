@@ -31,30 +31,53 @@ class ChatWindow(QtGui.QMainWindow):
 		self.input_widget = QtGui.QLineEdit()
 		self.button_send = QtGui.QPushButton("Enviar")
 		self.button_call = QtGui.QPushButton("Llamar")
+		self.button_stop = QtGui.QPushButton("Colgar")
 		self.grid.addWidget(self.output_widget,0,0)
 		self.grid.addWidget(self.input_widget,1,0)
 		self.grid.addWidget(self.button_send,2,0)
+		self.grid.addWidget(self.button_stop,2,2)
                 #Boton de llamada
 		self.grid.addWidget(self.button_call,2,1)
 
 		self.button_send.clicked.connect(lambda: self.enviar(str(self.input_widget.text())))
 		self.button_call.clicked.connect(lambda: self.llamar())
+		self.button_stop.clicked.connect(lambda: self.stopCall())
 		self.widget.show()
 		self.popup = None
+		#self.btnExit.clicked.connect(self.close)
+		#self.actionExit.triggered.connect(self.close)
+
+	def close_event(self, event):
+		reply = QtGui.QMessageBox.question(self, 'Message',"Deseas cerrar el chat?", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+		if reply == QtGui.QMessageBox.Yes:
+			self.channel.server.stop()
+			event.accept()
+		else:
+			event.ignore()
 	
 	def enviar(self, mensage):
 		self.output_widget.append(mensage)
 		self.input_widget.setText("")
 		self.channel.send_text(mensage)
+	def stopCall(self):
+		self.channel.stop_audio()
 
 	def llamar(self):
-		self.popup = MyPopup(self)
-		self.popup.exec_()
+		#self.popup = MyPopup(self)
+		#self.popup.exec_()
+		#self.channel.send_audio()
 		self.channel.send_audio()
 class MyPopup(QtGui.QDialog):
 	def __init__(self,widget,parent = None):
 		QWidget.__init__(self)
 		self.initUI(widget)
+	def close_event(self, event):
+		reply = QtGui.QMessageBox.question(self, 'Message',"Deseas cerrar el chat?", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+		if reply == QtGui.QMessageBox.Yes:
+			self.channel.server.stop()
+			event.accept()
+		else:
+			event.ignore()
 	def exec__(widget=None):
 		widget.channel.client.grabadora.graba()
 
@@ -73,12 +96,15 @@ class MyPopup(QtGui.QDialog):
 		self.show()
 	def run(self):
 		self.show()
+	def stop(self):
+		return 0
 	def close_audio(self,widget):
 		widget.channel.client.grabadora.parametro = False
 		self.close()
 	def main():
 		app = QtGui.QApplication(sys.argv)
 		mainWindow = ChatWindow()
+		mainWindow.show()
 		sys.exit(app.exec_())
 	if __name__ == '__main__':
 		main()

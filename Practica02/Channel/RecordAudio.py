@@ -5,32 +5,31 @@ import multiprocessing as mp
 #import threading
 
 class MyRecordAudio():	
-	def __init__(self, formato=pyaudio.paInt16, channels=2,rate=44100
+	def __init__(self, formato=pyaudio.paInt16, channels=1,rate=44100
                      , input1=True,frames_per_buffer=1024):
 
  #               super(MyRecordAudio,self).__init__()
-		self.format=formato
+		self.audio = pyaudio.PyAudio()
+		self.format = self.audio.get_format_from_width(2)
 		self.channels=channels
 		self.rate=rate
 		self.input=input1
 		self.frames_per_buffer=frames_per_buffer
-		self.audio = pyaudio.PyAudio()
 		self.stream = self.audio.open(format=self.format
                                               , channels=self.channels
                                               ,rate = self.rate
                                               , input = self.input
                                               ,frames_per_buffer = self.frames_per_buffer)
-		self.parametro = True
 
 	def graba(self,q):
-		self.q = q
 		self.frames = []
 		self.pila = []
 		while True:
-			self.pila.append(self.stream.read(1024))
-			self.frames.append(self.pila[-1])
-		data_ar = numpy.fromstring(''.join(pila),  dtype=numpy.uint8)
-		self.q.put(data_ar)
+			frame = []
+			for i in range(0,int(44100/1024 *1)):
+				frame.append(self.stream.read(1024))
+			data_ar = numpy.fromstring(''.join(frame),  dtype=numpy.uint8)
+			q.put(data_ar)
 
 	def run(self):
 		print "grabando"

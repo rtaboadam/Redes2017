@@ -51,7 +51,9 @@ class MyApiServer(threading.Thread):
         Metodo que regresa la lista de mensajes
         """
         return stack
-
+    def stop(self):
+        self.servidor.shutdown()
+        self.servidor.server_close()
 
 
 class FunctionWrapper:
@@ -63,9 +65,6 @@ class FunctionWrapper:
         self.interfaz = interfaz
         self.stack = stack = []
         self.audio = []
-        
-    def moo(self):
-        return 'moo'
     
     """ **************************************************
     Procedimiento que ofrece nuestro servidor, este metodo sera llamado

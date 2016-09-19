@@ -42,6 +42,11 @@ class Channel:
         return self.client.sendMessage(text)
 
     def send_audio(self):
-        return self.client.sendAudio()
+        self.thread = Thread(target=self.client.sendAudio)  
+        self.thread.daemon = True
+        self.thread.start()
+
+    def stop_audio(self):
+        return self.client.colgar()
 
 
