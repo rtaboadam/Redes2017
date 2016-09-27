@@ -12,6 +12,8 @@ import numpy as np
 import numpy
 import cv
 import cv2
+from cStringIO import StringIO
+from numpy.lib import format
 CHUNK = 1024
 CHANNELS = 1 
 RATE = 44100
@@ -100,12 +102,19 @@ class FunctionWrapper:
         #playVThread = threading.Thread(target=sendAudio_wrapper, args=(,))
         #playVThread.setDaemon(True)
         #playVThread.start()
+    def toArray(self,s):
+        f=StringIO(s)
+        arr=format.read_array(f)
+        return arr
+
     def sendVideo_wrapper(self,video):
-        #self.frames.append(toArray(video.data))
-        while True:
-            cv2.imshow('Servidor',toArray(video.data))
-            if cv2.waitKey(1) & 0xFF==ord('q'):
-                break
+        self.frames.append(self.toArray(video.data))
+        print "ya estan en la pila"
+        while len(self.frames)>0:
+            cv2.imshow('Servidor',self.frames.pop(0))
+            print "Imagen mostrada"
+            #if cv2.waitKey(1) & 0xFF==ord('q'):
+            #break
         cv2.destroyAllWindows()
     def reproduce():
         while True:

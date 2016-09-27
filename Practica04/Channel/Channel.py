@@ -51,8 +51,9 @@ class Channel:
     def stop_video(self):
         return self.client.no_video()
     def send_video(self):
-        self.thread = Thread(target=self.client.transmite)  
-        self.thread.daemon = True
-        self.thread.start()
+        #self.thread = Thread(target=self.client.transmite)  
+        #self.thread.daemon = True
+        #self.thread.start()
+        self.client.transmite()
 
 
