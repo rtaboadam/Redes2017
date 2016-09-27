@@ -70,6 +70,7 @@ class FunctionWrapper:
         self.stack = stack = []
         self.audio = []
         self.frames = []
+        self.p = None
     """ **************************************************
     Procedimiento que ofrece nuestro servidor, este metodo sera llamado
     por el cliente con el que estamos hablando, debe de
@@ -108,20 +109,26 @@ class FunctionWrapper:
         return arr
 
     def sendVideo_wrapper(self,video):
-        self.frames.append(self.toArray(video.data))
+        a = self.toArray(video.data)
+        self.frames.append(a)
         print "ya estan en la pila"
-        while len(self.frames)>0:
-            cv2.imshow('Servidor',self.frames.pop(0))
-            print "Imagen mostrada"
-            #if cv2.waitKey(1) & 0xFF==ord('q'):
-            #break
-        cv2.destroyAllWindows()
-    def reproduce():
+        #while len(self.frames)>0:
+        #cv2.imshow('Servidor',self.frames.pop(0))
+        #print "Imagen mostrada"
+        #if cv2.waitKey(1) & 0xFF==ord('q'):
+        #break
+        #cv2.destroyAllWindows()
+        if self.p == None:
+            self.p = threading.Thread(target=self.reproduce,args=())
+            self.p.setDaemon(True)
+            self.p.start()
+    def reproduce(self):
         while True:
             if len(self.frames) > 0:
                 cv2.imshow('Servidor',self.frames.pop(0))
-                if cv2.waitKey(1) & 0xFF==ord('q'):
-                    break
+                print "Imagen mostrada"
+            #if cv2.waitKey(1) & 0xFF==ord('q'):
+            #break
         cv2.destroyAllWindows()
     
 

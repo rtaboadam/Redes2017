@@ -62,25 +62,28 @@ class MyApiClient:
         return f.getvalue()
 
     def transmite(self):
-        self.cap = cv2.VideoCapture(0)
-        self.queue = mp.Queue()
-        self.p1 = threading.Thread(target=self.grabaVideo, args=(self.queue,))
+        #self.cap = cv2.VideoCapture(0)
+        self.transmitiendo = True
+        #self.queue = mp.Queue()
+        self.p1 = threading.Thread(target=self.grabaVideo)
         self.p1.daemon = True
         self.p1.start()
         #self.grabaVideo(self.queue)
         
-    def grabaVideo(self,q):
+    def grabaVideo(self):
         #self.transmitiendo = True
-        while True:
-            ret, frame = self.cap.read()
-            cv2.imshow('Cliente',frame)
+        cap = cv2.VideoCapture(0)
+        while self.transmitiendo:
+            ret, frame = cap.read()
+            #cv2.imshow('Cliente',frame)
             #cv2.waitKey(5) 
             #if cv2.waitKey(1) & 0xFF == ord('q'):
             #break
             data = xmlrpclib.Binary(self.toString(frame))
             self.proxy.sendVideo_wrapper(data)
             print "enviando frame" 
-        self.cap.release()
+        cap.release()
+
         cv2.destroyAllWindows()
 
 
