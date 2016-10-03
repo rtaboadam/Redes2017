@@ -13,10 +13,11 @@ import threading
 
 class ChatWindow(QtGui.QMainWindow):
 
-	def __init__(self,parent=None,contact_ip=None,my_port=None,contact_port=None):
+	def __init__(self,parent=None,contact_ip=None,my_port=5000,contact_port=5000):
 		super(ChatWindow, self).__init__(parent)
                 self.channel = Channel(contact_ip,contact_port,my_port,self)
                 self.initGUI(self.channel)
+        print contact_ip
 	
 	def initGUI(self,channel):
 		#self.channel = channel

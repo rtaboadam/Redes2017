@@ -1,8 +1,9 @@
 import sys
-
+sys.path.append('../Constants/')
+from Constants.Constants import *
 from PyQt4 import QtGui, QtCore
 from PyQt4 import Qt
-
+import socket
 from ChatWindow import *
 
 class Login1(QtGui.QWidget):
@@ -38,14 +39,12 @@ class Login2(QtGui.QWidget):
         self.initUI()
 
     def initUI(self):
-        self.label1 = QtGui.QLabel('Cual es mi ip?',self)
-        self.line1 = QtGui.QLineEdit(self)
         self.label2 = QtGui.QLabel('Cual es la ip del contacto?',self)
         self.line2 = QtGui.QLineEdit(self)
         self.buttonAceptar = QtGui.QPushButton('Aceptar', self)
         layout = QtGui.QVBoxLayout(self)
-        layout.addWidget(self.label1)
-        layout.addWidget(self.line1)
+        #layout.addWidget(self.label1)
+        #layout.addWidget(self.line1)
         layout.addWidget(self.label2)
         layout.addWidget(self.line2)
         layout.addWidget(self.buttonAceptar)
@@ -53,7 +52,14 @@ class Login2(QtGui.QWidget):
         self.setWindowTitle("Login")
 
     def access_chat(self):
+        self.chat = ChatWindow(contact_ip =self.get_ip_address()
+                               ,contact_port = self.line2.text()
+                               )
         self.close()
+    def get_ip_address(self):
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        return "%s"% (s.getsockname()[0])
 
 
 def main():
