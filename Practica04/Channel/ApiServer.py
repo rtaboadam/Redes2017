@@ -12,6 +12,7 @@ import numpy as np
 import numpy
 import cv
 import cv2
+import socket
 from cStringIO import StringIO
 from numpy.lib import format
 CHUNK = 1024
@@ -23,14 +24,19 @@ def foo():
     return 'foo'
 stack = None
 class MyApiServer(threading.Thread):
-    def __init__(self, my_port = Puerto_6000,interfaz=None):
+    def __init__(self,local = False, my_port = Puerto_5000,interfaz=None):
         """
         Metodo contructor de la clase
         @param <int> my_port: El puerto en el que va escuchar
         el servidor
         """
         super(MyApiServer,self).__init__()
-        self.servidor = SimpleXMLRPCServer(('localhost',my_port)
+        if(local):
+            self.servidor = SimpleXMLRPCServer(('localhost',my_port)
+                                           ,logRequests=True
+                                           , allow_none=True)
+        else:
+            self.servidor = SimpleXMLRPCServer((self.get_ip_address(),my_port)
                                            ,logRequests=True
                                            , allow_none=True)
         self.interfaz = interfaz
@@ -49,6 +55,11 @@ class MyApiServer(threading.Thread):
         print "Servidor corriendo"
         print "Ctrl-c para salir"
         self.servidor.serve_forever()
+
+    def get_ip_address(self):
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        return "%s"% (s.getsockname()[0])
 
     def verMensajes(self):
         """

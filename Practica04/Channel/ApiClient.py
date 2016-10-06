@@ -21,7 +21,7 @@ class MyApiClient:
         @param <int> my_port: El puerto de mi servidor
         """
         puerto = str(my_port)
-        uri = 'http://'+my_ip+':'+str(puerto)
+        uri = 'http://'+my_ip+':'+puerto
         self.proxy = xmlrpclib.ServerProxy(uri)
         self.grabadora = MyRecordAudio(formato=pyaudio.paInt16, channels=1,rate=44100,input1=True,frames_per_buffer=1024)
         self.llamando = False

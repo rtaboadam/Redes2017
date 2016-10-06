@@ -30,7 +30,8 @@ class Login1(QtGui.QWidget):
     def access_chat(self):
         self.chat = ChatWindow(contact_ip ='localhost'
                                ,contact_port = int(self.line2.text())
-                               ,my_port = int(self.line1.text()))
+                               ,my_port = int(self.line1.text())
+                               ,local = True)
         self.close()
 
 class Login2(QtGui.QWidget):
@@ -52,9 +53,7 @@ class Login2(QtGui.QWidget):
         self.setWindowTitle("Login")
 
     def access_chat(self):
-        self.chat = ChatWindow(contact_ip =self.get_ip_address()
-                               ,contact_port = self.line2.text()
-                               )
+        self.chat = ChatWindow(contact_ip =str(self.line2.text()))
         self.close()
     def get_ip_address(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
