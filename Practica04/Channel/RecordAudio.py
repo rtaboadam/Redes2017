@@ -17,9 +17,9 @@ class MyRecordAudio():
 		self.frames_per_buffer=frames_per_buffer
 		self.stream = self.audio.open(format=self.format
                                               , channels=self.channels
-                                              ,rate = self.rate
+                                              , rate = self.rate
                                               , input = self.input
-                                              ,frames_per_buffer = self.frames_per_buffer)
+                                              , frames_per_buffer = self.frames_per_buffer)
 
 	def graba(self,q):
 		self.frames = []

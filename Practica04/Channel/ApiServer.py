@@ -25,11 +25,12 @@ def foo():
 stack = None
 class MyApiServer(threading.Thread):
     def __init__(self,local = False, my_port = Puerto_5000,interfaz=None):
-        """
-        Metodo contructor de la clase
+        
+        """***************************************************
+        Método contructor de la clase
         @param <int> my_port: El puerto en el que va escuchar
         el servidor
-        """
+        ****************************************************"""
         super(MyApiServer,self).__init__()
         if(local):
             self.servidor = SimpleXMLRPCServer(('localhost',my_port)
@@ -48,10 +49,10 @@ class MyApiServer(threading.Thread):
         self.widget = None
 
     def run(self):
-        """
-        Metodo que inicia el servidor que tiene como
+        """*****************************************
+        Método que inicia el servidor que tiene como
         atributo
-        """
+        *****************************************"""
         print "Servidor corriendo"
         print "Ctrl-c para salir"
         self.servidor.serve_forever()
@@ -62,9 +63,9 @@ class MyApiServer(threading.Thread):
         return "%s"% (s.getsockname()[0])
 
     def verMensajes(self):
-        """
-        Metodo que regresa la lista de mensajes
-        """
+        """**************************************
+        Método que regresa la lista de mensajes
+        **************************************"""
         return stack
     def stop(self):
         self.servidor.shutdown()
@@ -73,20 +74,24 @@ class MyApiServer(threading.Thread):
 
 class FunctionWrapper:
     def __init__(self,interfaz):
-        """
-        Metodo contructor de la clase
+        
+        """******************************************
+        Método contructor de la clase
         @param <list> stack: La pila de los mensajes
-        """
+        *******************************************"""
+        
         self.interfaz = interfaz
         self.stack = stack = []
         self.audio = []
         self.frames = []
         self.p = None
-    """ **************************************************
-    Procedimiento que ofrece nuestro servidor, este metodo sera llamado
+    
+    """*****************************************************************
+    Procedimiento que ofrece nuestro servidor, este método sera llamado
     por el cliente con el que estamos hablando, debe de
     hacer lo necesario para mostrar el texto en nuestra pantalla.
-    ************************************************** """
+    ******************************************************************"""
+    
     def sendMessage_wrapper(self, message):
         self.stack = self.stack + [message]
         self.interfaz.output_widget.append(message)
@@ -94,9 +99,10 @@ class FunctionWrapper:
         return message
     
     def getStack(self):
-        """
-        Metodo que regresa la lista de mensajes
-        """
+        
+        """*************************************
+        Método que regresa la lista de mensajes
+        **************************************"""
         return self.stack
 
     def sendAudio_wrapper(self,audio):
@@ -122,7 +128,7 @@ class FunctionWrapper:
     def sendVideo_wrapper(self,video):
         a = self.toArray(video.data)
         self.frames.append(a)
-        print "ya estan en la pila"
+        print "Ya están en la pila"
         #while len(self.frames)>0:
         #cv2.imshow('Servidor',self.frames.pop(0))
         #print "Imagen mostrada"

@@ -81,7 +81,7 @@ class MyPopup(QtGui.QDialog):
 		QWidget.__init__(self)
 		self.initUI(widget)
 	def close_event(self, event):
-		reply = QtGui.QMessageBox.question(self, 'Message',"Deseas cerrar el chat?", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+		reply = QtGui.QMessageBox.question(self, 'Message',"¿Deseas cerrar el chat?", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 		if reply == QtGui.QMessageBox.Yes:
 			self.channel.server.stop()
 			event.accept()

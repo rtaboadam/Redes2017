@@ -33,7 +33,7 @@ def main(argv):
         opts, args = getopt.getopt(argv, "l", ["local="])
     except getopt.GetoptError:
         #TODO lanzar exepcion
-        raise Exception("jajaj que creees no jala xD xD") 
+        raise Exception("No fuinciona") 
     if opts: #Si el usuario mandó alguna bandera
         local = True if '-l' in opts[0] else False
     else:

@@ -9,9 +9,9 @@ from ApiClient import MyApiClient
 
 from threading import Thread
 """**************************************************
-Las instancias de esta clase contendran los metodos
-necesarios para hacer uso de los metodos
-del api de un contacto. Internamente Trabajara
+Las instancias de esta clase contendrán los métodos
+necesarios para hacer uso de los métodos
+del api de un contacto. Internamente Trabajará
 con una proxy apuntando hacia los servicios del
 servidor xmlrpc del contacto
 **************************************************"""
@@ -34,8 +34,8 @@ class Channel:
         self.server.start()
 
     """**************************************************
-    Metodo que se encarga de mandar texto al contacto con
-    el cual se estableció la conexion
+    Método que se encarga de mandar texto al contacto con
+    el cual se estableció la conexión
     **************************************************"""
     def send_text(self, text):
         #TODO

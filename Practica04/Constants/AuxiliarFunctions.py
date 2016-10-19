@@ -17,7 +17,7 @@
 import socket
 
 """**************************************************
- Metodo auxiliar que hace uso de internet para
+ Método auxiliar que hace uso de internet para
  conocer la ip con la que contamos como usuarios
 **************************************************"""
 
@@ -27,7 +27,7 @@ def get_ip_address():
     return "%s"% (s.getsockname()[0])
 
 """**************************************************
- Clase auxiliar que implementa el metodo
+ Clase auxiliar que implementa el método
 stop, para que el hilo se detenga externamente
 **************************************************"""
 import threading
